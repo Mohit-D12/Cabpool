@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "977045427812",
+    "firebase_url": "https://cabpoolapp-c7e8f.firebaseio.com",
+    "project_id": "cabpoolapp-c7e8f",
+    "storage_bucket": "cabpoolapp-c7e8f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:977045427812:android:7226a4818448a88636f171",
+        "android_client_info": {
+          "package_name": "com.example.cabpool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "977045427812-rgn09e21obcpsja52m2kal5j3p4f7u7h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cabpool",
+            "certificate_hash": "f12a5e9d02073c5dbfffbd97690f2a3e891b2d67"
+          }
+        },
+        {
+          "client_id": "977045427812-v6hceov99q9v54rd6krtpt76avffc77n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWHwKYLedftSke-LTVAuw-Zp6QOyEh_rY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "977045427812-v6hceov99q9v54rd6krtpt76avffc77n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

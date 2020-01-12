@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Cabpool</string>
+    <string name="string_open">Open</string>
+    <string name="string_close">Close</string>
+    <string name="string_profile">Profile</string>
+    <string name="string_about">About</string>
+</resources>

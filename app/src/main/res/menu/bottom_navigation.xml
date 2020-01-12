@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/cabpool_bottomNavigationBar"
+        android:icon="@drawable/cabpool"
+        android:title="Cabpool"
+        />
+
+    <item
+        android:id="@+id/upcoming_bottomNavigationBar"
+        android:icon="@drawable/upcoming"
+        android:title="Upcoming"
+        />
+
+    <item
+        android:id="@+id/drivers_bottomNavigationBar"
+        android:icon="@drawable/drivers"
+        android:title="Drivers"
+        />
+</menu>
