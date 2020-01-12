@@ -65,9 +65,8 @@ public class DriversFragment extends Fragment {
                 drivers.clear();;
                 mDataKey.clear();
                 for(DataSnapshot single:dataSnapshot.getChildren()){
-                    Drivers driver = new Drivers(single.child("name").getValue().toString(),single.child("phone").getValue().toString());
+                    Drivers driver = new Drivers(single.child("name").getValue().toString(),single.child("phone").getValue().toString(),single.child("vehicle").getValue().toString());
                     drivers.add(driver);
-                    // cabpools.add(single.getValue(Cabpools.class));
                     mDataKey.add(single.getKey().toString());
                 }
                 adapter.notifyDataSetChanged();

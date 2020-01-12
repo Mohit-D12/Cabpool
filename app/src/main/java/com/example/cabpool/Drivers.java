@@ -1,11 +1,12 @@
 package com.example.cabpool;
 
 public class Drivers {
-    private String name,phoneNumber;
+    private String name,phoneNumber,vehicle;
 
-    public Drivers(String name, String phoneNumber) {
+    public Drivers(String name, String phoneNumber,String vehicle) {
         this.name = name;
         this.phoneNumber = phoneNumber;
+        this.vehicle = vehicle;
     }
 
     public String getName() {
@@ -22,5 +23,13 @@ public class Drivers {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(String vehicle) {
+        this.vehicle = vehicle;
     }
 }

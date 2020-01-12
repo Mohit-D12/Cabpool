@@ -34,6 +34,7 @@ public class DriversAdapter extends RecyclerView.Adapter<DriversAdapter.DriversV
     public void onBindViewHolder(@NonNull DriversViewHolder holder, int position) {
         holder.name.setText(drivers.get(position).getName());
         holder.phoneNumber.setText(drivers.get(position).getPhoneNumber());
+        holder.vehicle.setText(drivers.get(position).getVehicle());
     }
 
     @Override
@@ -43,12 +44,13 @@ public class DriversAdapter extends RecyclerView.Adapter<DriversAdapter.DriversV
 
     public class DriversViewHolder extends RecyclerView.ViewHolder{
 
-        TextView name , phoneNumber;
+        TextView name , phoneNumber, vehicle;
 
         public DriversViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name_field_driversRecyclerView);
             phoneNumber = itemView.findViewById(R.id.to_field_driversRecyclerView);
+            vehicle = itemView.findViewById(R.id.vehicle_field_driversRecyclerView);
         }
     }
 }
