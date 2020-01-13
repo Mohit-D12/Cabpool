@@ -49,7 +49,7 @@ public class DriversAdapter extends RecyclerView.Adapter<DriversAdapter.DriversV
         public DriversViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name_field_driversRecyclerView);
-            phoneNumber = itemView.findViewById(R.id.to_field_driversRecyclerView);
+            phoneNumber = itemView.findViewById(R.id.phone_field_driversRecyclerView);
             vehicle = itemView.findViewById(R.id.vehicle_field_driversRecyclerView);
         }
     }
