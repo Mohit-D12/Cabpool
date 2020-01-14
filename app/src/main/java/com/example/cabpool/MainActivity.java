@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference mDatabase;
     String name="";
     TextView forgotPassword_loginScreen_java;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +138,14 @@ public class MainActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(tag, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            String uid= mAuth.getCurrentUser().getUid();
+                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
+                            databaseReference.child(uid).setValue(user.getDisplayName());
+                            sharedPreferences = getSharedPreferences("Users",MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("userId",uid);
+                            editor.commit();
+
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.

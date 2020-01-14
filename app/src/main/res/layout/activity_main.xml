@@ -26,7 +26,7 @@
         android:drawablePadding="10dp"
         android:layout_marginTop="25dp"
         android:layout_below="@id/image_loginScreen_xml"
-        android:hint="E-mail or Phone Number"
+        android:hint="E-mail"
         />
     <EditText
         android:layout_width="match_parent"

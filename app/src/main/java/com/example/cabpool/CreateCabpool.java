@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -29,10 +31,12 @@ public class CreateCabpool extends AppCompatActivity {
     DatePickerDialog datePickerDialog;
     TimePickerDialog timePickerDialog;
     int day, month, year, hour, minute;
-    String date,time,from, to;
+    String date,time,from, to,uid;
 
     ArrayList<Cabpools> cabpools;
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference, database;
+    SharedPreferences sharedPreferences;
+
 
 
     @Override
@@ -116,13 +120,20 @@ public class CreateCabpool extends AppCompatActivity {
                     //for uploading data to firebase
                     databaseReference = FirebaseDatabase.getInstance().getReference().child("Cabpools");
 
+
                     HashMap<String,String> hashMap = new HashMap<>();
 
                     hashMap.put("from",from);
                     hashMap.put("to",to);
                     hashMap.put("date",date);
                     hashMap.put("time",time);
-                     databaseReference.push().setValue(hashMap);
+                  databaseReference.push().setValue(hashMap);
+
+                    sharedPreferences = getSharedPreferences("Users",MODE_PRIVATE);
+                    uid = sharedPreferences.getString("userId","defaultUser");
+                    database = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+
+                    database.push().setValue(hashMap);
 
 
                   /*  Cabpools cabpool = new Cabpools(from,to,date,time);

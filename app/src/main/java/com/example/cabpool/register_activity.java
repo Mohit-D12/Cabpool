@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class register_activity extends AppCompatActivity {
 
@@ -29,6 +32,8 @@ public class register_activity extends AppCompatActivity {
     // Creating Firebase authentication object
     ProgressDialog mProgress;
     FirebaseAuth mAuth;
+
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +69,14 @@ public class register_activity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
 
                                     String uid= mAuth.getCurrentUser().getUid();
+                                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
+                                    databaseReference.child(uid).setValue(name);
+                                    sharedPreferences = getSharedPreferences("Users",MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString("userId",uid);
+                                    editor.commit();
+
+
                                     UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
                                     mAuth.getCurrentUser().updateProfile(profileChangeRequest);
 

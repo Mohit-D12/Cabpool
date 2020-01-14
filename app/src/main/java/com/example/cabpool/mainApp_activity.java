@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +32,7 @@ public class mainApp_activity extends AppCompatActivity implements NavigationVie
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
+    SharedPreferences sharedPreferences;
 
     GoogleSignInClient mGoogleSignInClient;
 
@@ -133,6 +135,10 @@ public class mainApp_activity extends AppCompatActivity implements NavigationVie
             FirebaseAuth mAuth= FirebaseAuth.getInstance();
             mAuth.signOut();
             revokeAccess();
+            sharedPreferences = getSharedPreferences("Users",MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("userId",null);
+            editor.commit();
             startActivity(new Intent(mainApp_activity.this,MainActivity.class));
         }
         drawerLayout.closeDrawer(GravityCompat.START);

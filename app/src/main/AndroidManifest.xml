@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CreateCabpool"></activity>
+        <activity android:name=".CabpoolInfo"></activity>
+        <activity android:name=".CreateCabpool" />
         <activity android:name=".register_activity" />
         <activity android:name=".mainApp_activity" />
         <activity android:name=".forgotPassword_activity" />
