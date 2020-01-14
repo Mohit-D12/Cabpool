@@ -15,18 +15,20 @@
         android:id="@+id/buttonPanel"
         >
         <Button
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:backgroundTint="@color/buttonPanel"
             android:text="Filter"
+            android:drawableRight="@drawable/funnel"
              />
         <Button
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:backgroundTint="@color/buttonPanel"
             android:layout_weight="1"
             android:text="Sort"
+            android:drawableRight="@drawable/sort"
             />
 
     </LinearLayout>

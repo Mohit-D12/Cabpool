@@ -27,7 +27,8 @@ public class CabpoolAdapter extends RecyclerView.Adapter<CabpoolAdapter.CabpoolV
     @NonNull
     @Override
     public CabpoolViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new CabpoolViewHolder(LayoutInflater.from(context).inflate(R.layout.cabpool_recycler_layout,parent,false));
+        CabpoolViewHolder view = new CabpoolViewHolder(LayoutInflater.from(context).inflate(R.layout.cabpool_recycler_layout,parent,false));
+        return view;
     }
 
     @Override
