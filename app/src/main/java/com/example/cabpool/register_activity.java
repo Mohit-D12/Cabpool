@@ -23,8 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 public class register_activity extends AppCompatActivity {
 
     EditText name_registerScreen_java, password_registerScreen_java, confirmPassword_registerScreen_java, email_registerScreen_java;
-    int mYear, mMonth, mDay;
-    String date;
     String name;
     String password;
     String confirmPassword, email;
@@ -71,9 +69,13 @@ public class register_activity extends AppCompatActivity {
                                     String uid= mAuth.getCurrentUser().getUid();
                                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
                                     databaseReference.child(uid).child("name").setValue(name);
+                                    databaseReference.child(uid).child("phone").setValue(0);
                                     sharedPreferences = getSharedPreferences("Users",MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putString("userId",uid);
+
+                                    System.out.println("userName"+name);
+                                    editor.putString("userName",name);
                                     editor.commit();
 
 

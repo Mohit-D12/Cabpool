@@ -1,7 +1,11 @@
 package com.example.cabpool;
 
-public class Cabpools {
+import java.text.SimpleDateFormat;
+
+public class Cabpools{
     private String from,to,date,time;
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/YYYY");
+
 
     public Cabpools(String from, String to, String date, String time) {
         this.from = from;
@@ -41,4 +45,6 @@ public class Cabpools {
     public void setTime(String time) {
         this.time = time;
     }
+
+
 }

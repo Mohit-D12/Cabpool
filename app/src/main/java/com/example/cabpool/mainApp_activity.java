@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -33,6 +34,8 @@ public class mainApp_activity extends AppCompatActivity implements NavigationVie
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     SharedPreferences sharedPreferences;
+
+    TextView username_navigationdrawer;
 
     GoogleSignInClient mGoogleSignInClient;
 
@@ -60,12 +63,13 @@ public class mainApp_activity extends AppCompatActivity implements NavigationVie
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.navigationView);
 
+
+
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
                 R.string.string_open, R.string.string_close);
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle);                  //displaying button to open navigation drawer
         actionBarDrawerToggle.syncState();
-
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         navigationView.setNavigationItemSelectedListener(this);
@@ -103,16 +107,26 @@ public class mainApp_activity extends AppCompatActivity implements NavigationVie
     //for allowing drawer to open when we click the button
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        username_navigationdrawer = drawerLayout.findViewById(R.id.username_navigationDrawer);
+        sharedPreferences = getSharedPreferences("Users",MODE_PRIVATE);
+        username_navigationdrawer.setText(sharedPreferences.getString("userName","defaultUser"));
+
+
         if (actionBarDrawerToggle.onOptionsItemSelected(item))
             return true;
 
         return super.onOptionsItemSelected(item);
     }
 
+    
+
     //for switching between fragments via navigation drawer
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
+
+
         if (id == R.id.home_navigationBar)
         {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

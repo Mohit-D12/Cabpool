@@ -141,9 +141,12 @@ public class MainActivity extends AppCompatActivity {
                             String uid= mAuth.getCurrentUser().getUid();
                             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
                             databaseReference.child(uid).child("name").setValue(user.getDisplayName());
+                            databaseReference.child(uid).child("phone").setValue(0);
                             sharedPreferences = getSharedPreferences("Users",MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("userId",uid);
+                            editor.putString("userName",user.getDisplayName());
+                            System.out.println("userName"+user.getDisplayName());
                             editor.commit();
 
                             updateUI(user);

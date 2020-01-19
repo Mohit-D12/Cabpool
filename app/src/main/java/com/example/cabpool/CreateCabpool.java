@@ -83,7 +83,12 @@ public class CreateCabpool extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month++;
-                date = day+"/"+month+"/"+year;
+                if (month>9)
+                    date = day+"/"+month+"/"+year;
+                else
+                    date = day+"/0"+month+"/"+year;
+                if(day<10)
+                    date = "0"+date;
                 date_Button.setText(date);
             }
         };
@@ -100,10 +105,25 @@ public class CreateCabpool extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hour, int minutes) {
                         String suffix;
-                        if(hour>=12) suffix="PM";
+                        if(hour>12) {
+                            hour-=12;
+                            suffix="PM";
+                        }
+                        if (hour==12)
+                            suffix="PM";
                         else suffix="AM";
 
+                        if(hour>9&&minutes>9)
                         time = hour+":"+minutes+" "+suffix;
+                        else
+                            {
+                                if(hour>9)
+                                    time = hour+":0"+minutes+" "+suffix;
+                                else if(minutes>9)
+                                    time = "0"+hour+":"+minutes+" "+suffix;
+                                else
+                                    time = "0"+hour+":0"+minutes+" "+suffix;
+                            }
                         time_Button.setText(time);
 
                     }
