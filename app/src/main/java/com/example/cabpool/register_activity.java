@@ -70,7 +70,7 @@ public class register_activity extends AppCompatActivity {
 
                                     String uid= mAuth.getCurrentUser().getUid();
                                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
-                                    databaseReference.child(uid).setValue(name);
+                                    databaseReference.child(uid).child("name").setValue(name);
                                     sharedPreferences = getSharedPreferences("Users",MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putString("userId",uid);

@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             String uid= mAuth.getCurrentUser().getUid();
                             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
-                            databaseReference.child(uid).setValue(user.getDisplayName());
+                            databaseReference.child(uid).child("name").setValue(user.getDisplayName());
                             sharedPreferences = getSharedPreferences("Users",MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("userId",uid);
@@ -191,6 +191,11 @@ public class MainActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         FirebaseUser currentUser=mAuth.getCurrentUser();
+                        String uid= mAuth.getCurrentUser().getUid();
+                        sharedPreferences = getSharedPreferences("Users",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("userId",uid);
+                        editor.commit();
                         if(currentUser.isEmailVerified())
                             updateUI(currentUser);
                         else Toast.makeText(getApplicationContext(),"Please vdrify your E-mail", Toast.LENGTH_SHORT).show();

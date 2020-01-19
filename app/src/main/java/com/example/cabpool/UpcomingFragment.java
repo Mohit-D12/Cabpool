@@ -31,7 +31,7 @@ public class UpcomingFragment extends Fragment {
 
     private View upcomingView;
     private RecyclerView recyclerView;
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference, cabpoolReference;
     SharedPreferences sharedPreferences;
 
     List<Cabpools> cabpools = new ArrayList<>();
@@ -63,20 +63,45 @@ public class UpcomingFragment extends Fragment {
     private void loadData() {
         sharedPreferences = getActivity().getSharedPreferences("Users",MODE_PRIVATE);;
         String uid = sharedPreferences.getString("userId","defaultUser");
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child("Cabpools");
+
+
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                cabpools.clear();;
+                cabpools.clear();
                 mDataKey.clear();
-                for(DataSnapshot single:dataSnapshot.getChildren()){
-                    Cabpools cabpool = new Cabpools(single.child("from").getValue().toString(),single.child("to").getValue().toString(),single.child("date").getValue().toString(),single.child("time").getValue().toString());
-                    cabpools.add(cabpool);
-                    // cabpools.add(single.getValue(Cabpools.class));
-                    mDataKey.add(single.getKey());
+                for (DataSnapshot single : dataSnapshot.getChildren()) {
+                    final String cabpoolId = single.getValue().toString();
+
+                    cabpoolReference = FirebaseDatabase.getInstance().getReference().child("Cabpools").child(cabpoolId);
+
+                    cabpoolReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            String from=dataSnapshot.child("from").getValue().toString();
+                            String to=dataSnapshot.child("to").getValue().toString();
+                            String date=dataSnapshot.child("date").getValue().toString();
+                            String time=dataSnapshot.child("time").getValue().toString();
+
+                            Cabpools cabpool = new Cabpools(from,to,date,time);
+                            cabpools.add(cabpool);
+                            mDataKey.add(cabpoolId);
+
+                            adapter.notifyDataSetChanged();
+
+                        }
+
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
                 }
-                adapter.notifyDataSetChanged();
                 progress.dismiss();
             }
 

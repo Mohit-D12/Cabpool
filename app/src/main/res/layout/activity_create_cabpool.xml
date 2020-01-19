@@ -28,6 +28,7 @@
         android:hint="Enter Pickup Point"
         android:id="@+id/PickupPoint_Create"
         android:layout_marginHorizontal="35dp"
+        android:autofillHints="location"
         />
 
     <EditText
