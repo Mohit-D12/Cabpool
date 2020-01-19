@@ -73,8 +73,6 @@ public class register_activity extends AppCompatActivity {
                                     sharedPreferences = getSharedPreferences("Users",MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putString("userId",uid);
-
-                                    System.out.println("userName"+name);
                                     editor.putString("userName",name);
                                     editor.commit();
 

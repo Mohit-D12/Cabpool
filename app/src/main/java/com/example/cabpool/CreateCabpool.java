@@ -109,7 +109,7 @@ public class CreateCabpool extends AppCompatActivity {
                             hour-=12;
                             suffix="PM";
                         }
-                        if (hour==12)
+                       else if (hour==12)
                             suffix="PM";
                         else suffix="AM";
 

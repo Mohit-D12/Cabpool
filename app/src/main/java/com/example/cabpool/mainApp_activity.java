@@ -119,7 +119,7 @@ public class mainApp_activity extends AppCompatActivity implements NavigationVie
         return super.onOptionsItemSelected(item);
     }
 
-    
+
 
     //for switching between fragments via navigation drawer
     @Override
@@ -152,6 +152,7 @@ public class mainApp_activity extends AppCompatActivity implements NavigationVie
             sharedPreferences = getSharedPreferences("Users",MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("userId",null);
+            editor.putString("userName",null);
             editor.commit();
             startActivity(new Intent(mainApp_activity.this,MainActivity.class));
         }
