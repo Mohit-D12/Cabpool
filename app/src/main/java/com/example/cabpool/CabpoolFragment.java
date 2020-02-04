@@ -33,6 +33,7 @@ public class CabpoolFragment extends Fragment {
 
     List<Cabpools> cabpools = new ArrayList<>();
     List<String> mDataKey = new ArrayList<>();
+    List<String> autoComplete= new ArrayList<>();
 
     ProgressDialog progress;
 
@@ -73,13 +74,17 @@ public class CabpoolFragment extends Fragment {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                cabpools.clear();;
+                cabpools.clear();
                 mDataKey.clear();
+                autoComplete.clear();
                 for(DataSnapshot single:dataSnapshot.getChildren()){
                     Cabpools cabpool = new Cabpools(single.child("from").getValue().toString(),single.child("to").getValue().toString(),single.child("date").getValue().toString(),single.child("time").getValue().toString());
                     cabpools.add(cabpool);
                     // cabpools.add(single.getValue(Cabpools.class));
                     mDataKey.add(single.getKey().toString());
+                    autoComplete.add(single.child("from").getValue().toString());
+                    autoComplete.add(single.child("to").getValue().toString());
+                    autoComplete.add(single.child("date").getValue().toString().substring(0,2));
                 }
                 adapter.notifyDataSetChanged();
                 progress.dismiss();

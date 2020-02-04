@@ -4,40 +4,23 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="25dp"
-        android:layout_marginHorizontal="15dp"
-        android:backgroundTint="#5C6BC0"
-        android:id="@+id/buttonPanel"
-        >
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:backgroundTint="@color/buttonPanel"
-            android:text="Filter"
-            android:drawableRight="@drawable/funnel"
-             />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/buttonPanel"
-            android:layout_weight="1"
-            android:text="Sort"
-            android:drawableRight="@drawable/sort"
-            />
 
-    </LinearLayout>
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter a location or date"
+            android:id="@+id/autoCompleteTextView_searchBar"
+            android:drawableEnd="@drawable/search"
+            android:layout_marginTop="25dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginHorizontal="25dp"
+            />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonPanel"
+        android:layout_below="@+id/autoCompleteTextView_searchBar"
         android:id="@+id/recyclerView_cabpool"
         />
 

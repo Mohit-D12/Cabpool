@@ -1,11 +1,19 @@
 package com.example.cabpool;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class Cabpools{
     private String from,to,date,time;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/YYYY");
 
+
+
+
+    public SimpleDateFormat getSimpleDateFormat(String date) throws ParseException {
+        simpleDateFormat.parse(date);
+        return simpleDateFormat;
+    }
 
     public Cabpools(String from, String to, String date, String time) {
         this.from = from;
