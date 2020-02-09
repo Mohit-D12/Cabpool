@@ -152,7 +152,7 @@ public class CabpoolInfo extends AppCompatActivity {
                          }
                          if (flag==0) {
                              cabpoolReference.child("Users").push().setValue(uid);
-                             usersReference.child("uid").child("Cabpools").push().setValue(cabpoolId);
+                             usersReference.child(uid).child("Cabpools").push().setValue(cabpoolId);
                              Toast.makeText(getApplicationContext(), "Cabpool joined successfully", Toast.LENGTH_SHORT).show();
                              flag=1;
                              startActivity(new Intent(getApplicationContext(), mainApp_activity.class));
