@@ -17,14 +17,19 @@
             android:drawableEnd="@drawable/search"
             android:hint="Enter a location or date"
             />
-
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/autoCompleteTextView_searchBar"
+        android:id="@+id/refresh_cabpools"
+        >
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/autoCompleteTextView_searchBar"
         android:id="@+id/recyclerView_cabpool"
         />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/AddButton_Create"

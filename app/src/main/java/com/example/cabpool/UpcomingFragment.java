@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,6 +40,7 @@ public class UpcomingFragment extends Fragment {
 
     ProgressDialog progress;
     CabpoolAdapter adapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
 
     @Nullable
@@ -46,6 +48,7 @@ public class UpcomingFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         upcomingView = inflater.inflate(R.layout.upcoming_fragment, container, false);
         recyclerView = upcomingView.findViewById(R.id.recyclerView_upcoming);
+        swipeRefreshLayout = upcomingView.findViewById(R.id.refresh_upcoming);
         return upcomingView;
     }
     @Override
@@ -59,6 +62,16 @@ public class UpcomingFragment extends Fragment {
         progress.setCancelable(false);
         progress.show();
         loadData();
+
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                progress.show();
+                loadData();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
     private void loadData() {
         sharedPreferences = getActivity().getSharedPreferences("Users",MODE_PRIVATE);;

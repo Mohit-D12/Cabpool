@@ -2,6 +2,7 @@ package com.example.cabpool;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -44,10 +46,8 @@ public class CabpoolFragment extends Fragment {
     List<String> mTempDataKey = new ArrayList<>();
     List<String> autoComplete= new ArrayList<>();
 
-    String field = "";
-
     ProgressDialog progress;
-
+    SwipeRefreshLayout swipeRefreshLayout;
     CabpoolAdapter adapter, tempAdapter;
 
     @Nullable
@@ -58,6 +58,7 @@ public class CabpoolFragment extends Fragment {
 
         addCabpoolFloatingButton = cabpoolView.findViewById(R.id.AddButton_Create);
         recyclerView = cabpoolView.findViewById(R.id.recyclerView_cabpool);
+        swipeRefreshLayout = cabpoolView.findViewById(R.id.refresh_cabpools);
 
         searchBar = cabpoolView.findViewById(R.id.autoCompleteTextView_searchBar);
 
@@ -83,6 +84,15 @@ public class CabpoolFragment extends Fragment {
         progress.show();
         loadData();
 
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                progress.show();
+                loadData();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         ArrayAdapter<String> autocompleteArrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,autoComplete);
         searchBar.setAdapter(autocompleteArrayAdapter);
@@ -109,6 +119,15 @@ public class CabpoolFragment extends Fragment {
                         while (itr.hasNext()) {
                             Cabpools cabpool = itr.next();
                             String datakey = itr2.next();
+
+                            if (cabpool.getDate().substring(0, 2).contains(term)
+                                    || cabpool.getFrom().toLowerCase().contains(term.toLowerCase())
+                                    || cabpool.getTo().toLowerCase().contains(term.toLowerCase())){
+                                tempCabpools.add(cabpool);
+                                mTempDataKey.add(datakey);
+                            }
+
+                            /*
                             switch (field) {
                                 case "Date":
                                     if (cabpool.getDate().substring(0, 2).contains(term)) {
@@ -136,7 +155,7 @@ public class CabpoolFragment extends Fragment {
                                         mTempDataKey.add(datakey);
                                     }
                             }
-
+                            */
                         }
                         recyclerView.setAdapter(tempAdapter);
                     }

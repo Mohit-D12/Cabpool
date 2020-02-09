@@ -44,16 +44,17 @@
                 />
         </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                android:text="Phone"
-                android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="15dp"
-                android:id="@+id/phone_field_driversRecyclerView"
-                />
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/call_driversRecyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/cardview_shadow_end_color"
+            android:src="@drawable/call"
+            android:tint="@color/colorAccent"
+            android:layout_marginLeft="12dp"
+            />
+
+    </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>
