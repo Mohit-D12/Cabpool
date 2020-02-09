@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
         <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextView_searchBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter a location or date"
-            android:id="@+id/autoCompleteTextView_searchBar"
-            android:drawableEnd="@drawable/search"
-            android:layout_marginTop="25dp"
             android:layout_alignParentTop="true"
             android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="25dp"
+            android:completionThreshold="1"
+            android:drawableEnd="@drawable/search"
+            android:hint="Enter a location or date"
             />
 
     <androidx.recyclerview.widget.RecyclerView

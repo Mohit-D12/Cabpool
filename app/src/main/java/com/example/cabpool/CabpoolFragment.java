@@ -3,9 +3,14 @@ package com.example.cabpool;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class CabpoolFragment extends Fragment {
@@ -30,21 +36,30 @@ public class CabpoolFragment extends Fragment {
     private RecyclerView recyclerView;
     DatabaseReference databaseReference;
 
+    AutoCompleteTextView searchBar;
 
     List<Cabpools> cabpools = new ArrayList<>();
     List<String> mDataKey = new ArrayList<>();
+    List<Cabpools> tempCabpools = new ArrayList<>();
+    List<String> mTempDataKey = new ArrayList<>();
     List<String> autoComplete= new ArrayList<>();
+
+    String field = "";
 
     ProgressDialog progress;
 
-    CabpoolAdapter adapter;
+    CabpoolAdapter adapter, tempAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         cabpoolView = inflater.inflate(R.layout.cabpool_fragment, container, false);
+
         addCabpoolFloatingButton = cabpoolView.findViewById(R.id.AddButton_Create);
         recyclerView = cabpoolView.findViewById(R.id.recyclerView_cabpool);
+
+        searchBar = cabpoolView.findViewById(R.id.autoCompleteTextView_searchBar);
 
         addCabpoolFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +82,66 @@ public class CabpoolFragment extends Fragment {
         progress.setCancelable(false);
         progress.show();
         loadData();
+
+
+        ArrayAdapter<String> autocompleteArrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,autoComplete);
+        searchBar.setAdapter(autocompleteArrayAdapter);
+
+            searchBar.addTextChangedListener(new TextWatcher() {
+
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                }
+                @Override
+                public void afterTextChanged(Editable editable) {
+                }
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    String term = searchBar.getText().toString().trim();
+                    if (term.isEmpty()) {
+                        recyclerView.setAdapter(adapter);
+                    }
+                    else {
+                        tempCabpools.clear();
+                        mTempDataKey.clear();
+                        Iterator<Cabpools> itr = cabpools.iterator();
+                        Iterator<String> itr2 = mDataKey.iterator();
+                        while (itr.hasNext()) {
+                            Cabpools cabpool = itr.next();
+                            String datakey = itr2.next();
+                            switch (field) {
+                                case "Date":
+                                    if (cabpool.getDate().substring(0, 2).contains(term)) {
+                                        tempCabpools.add(cabpool);
+                                        mTempDataKey.add(datakey);
+                                    }
+                                    break;
+                                case "From":
+                                    if (cabpool.getFrom().toLowerCase().contains(term.toLowerCase())){
+                                        tempCabpools.add(cabpool);
+                                        mTempDataKey.add(datakey);
+                                    }
+                                    break;
+                                case "To":
+                                    if (cabpool.getTo().toLowerCase().contains(term.toLowerCase())){
+                                        tempCabpools.add(cabpool);
+                                        mTempDataKey.add(datakey);
+                                    }
+                                    break;
+                                default:
+                                    if (cabpool.getDate().substring(0, 2).contains(term)
+                                            || cabpool.getFrom().toLowerCase().contains(term.toLowerCase())
+                                            || cabpool.getTo().toLowerCase().contains(term.toLowerCase())){
+                                        tempCabpools.add(cabpool);
+                                        mTempDataKey.add(datakey);
+                                    }
+                            }
+
+                        }
+                        recyclerView.setAdapter(tempAdapter);
+                    }
+                }
+            });
     }
 
     private void loadData() {
@@ -79,12 +154,15 @@ public class CabpoolFragment extends Fragment {
                 autoComplete.clear();
                 for(DataSnapshot single:dataSnapshot.getChildren()){
                     Cabpools cabpool = new Cabpools(single.child("from").getValue().toString(),single.child("to").getValue().toString(),single.child("date").getValue().toString(),single.child("time").getValue().toString());
+
                     cabpools.add(cabpool);
-                    // cabpools.add(single.getValue(Cabpools.class));
-                    mDataKey.add(single.getKey().toString());
-                    autoComplete.add(single.child("from").getValue().toString());
-                    autoComplete.add(single.child("to").getValue().toString());
-                    autoComplete.add(single.child("date").getValue().toString().substring(0,2));
+                    mDataKey.add(single.getKey());
+                    if(!autoComplete.contains(single.child("from").getValue().toString()))
+                        autoComplete.add(single.child("from").getValue().toString());
+                    if(!autoComplete.contains(single.child("to").getValue().toString()))
+                        autoComplete.add(single.child("to").getValue().toString());
+                    if(!autoComplete.contains(single.child("date").getValue().toString().substring(0,2)))
+                      autoComplete.add(single.child("date").getValue().toString().substring(0,2));
                 }
                 adapter.notifyDataSetChanged();
                 progress.dismiss();
@@ -101,7 +179,7 @@ public class CabpoolFragment extends Fragment {
         recyclerView = cabpoolView.findViewById(R.id.recyclerView_cabpool);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new CabpoolAdapter(getActivity(),cabpools,mDataKey);
+        tempAdapter = new CabpoolAdapter(getActivity(),tempCabpools,mTempDataKey);
         recyclerView.setAdapter(adapter);
     }
-
 }
