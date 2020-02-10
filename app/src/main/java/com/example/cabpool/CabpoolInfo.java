@@ -54,12 +54,10 @@ public class CabpoolInfo extends AppCompatActivity {
                      @Override
                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                         if (!dataSnapshot.hasChildren())
+                         if (joinButton_cabpoolInfo_java.getText().toString().equalsIgnoreCase("Join"))
                              joinCabpool();
-                         else if(dataSnapshot.hasChild(cabpoolId))
-                             Toast.makeText(getApplicationContext(), "You are already a part of this cabpool", Toast.LENGTH_SHORT).show();
                          else
-                             joinCabpool();
+                             leavecabpool();
                      }
                      @Override
                      public void onCancelled(@NonNull DatabaseError databaseError) { }
@@ -94,7 +92,18 @@ public class CabpoolInfo extends AppCompatActivity {
         cabpoolReference.child("Users").child(uid).setValue(uid);
         usersReference.child(uid).child("Cabpools").child(cabpoolId).setValue(cabpoolId);
         Toast.makeText(getApplicationContext(), "Cabpool joined successfully", Toast.LENGTH_SHORT).show();
+        joinButton_cabpoolInfo_java.setText("LEAVE");
         startActivity(new Intent(getApplicationContext(), mainApp_activity.class));
+        loadData();
+    }
+
+    private void leavecabpool() {
+        cabpoolReference.child("Users").child(uid).setValue(null);
+        usersReference.child(uid).child("Cabpools").child(cabpoolId).setValue(null);
+        Toast.makeText(getApplicationContext(), "Left Cabpool successfully", Toast.LENGTH_SHORT).show();
+        joinButton_cabpoolInfo_java.setText("JOIN");
+        startActivity(new Intent(getApplicationContext(), mainApp_activity.class));
+        loadData();
     }
 
     private void loadData() {
@@ -121,6 +130,8 @@ public class CabpoolInfo extends AppCompatActivity {
                                     Users user = new Users(dataSnapshot.child("name").getValue().toString(),dataSnapshot.child("phone").getValue().toString());
                                     users.add(user);
                                     mDataKey.add(dataSnapshot.getKey());
+                                    if(dataSnapshot.getKey().equalsIgnoreCase(uid))
+                                        joinButton_cabpoolInfo_java.setText("Leave");
                                     adapter.notifyDataSetChanged();
                                 }
                                 @Override
