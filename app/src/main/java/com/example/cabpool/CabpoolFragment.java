@@ -177,7 +177,7 @@ public class CabpoolFragment extends Fragment {
                             date = single.child("date").getValue().toString(),
                             time = single.child("time").getValue().toString();
 
-                    if (!CompareTime.isValid(date,time)) {
+                    if (!CompareTime.isValid(date,time) || !single.hasChild("Users")) {
                         databaseReference.child(single.getKey()).setValue(null);
                         continue;
                     }
