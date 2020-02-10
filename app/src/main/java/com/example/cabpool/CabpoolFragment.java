@@ -172,25 +172,32 @@ public class CabpoolFragment extends Fragment {
                 mDataKey.clear();
                 autoComplete.clear();
                 for(DataSnapshot single:dataSnapshot.getChildren()){
-                    Cabpools cabpool = new Cabpools(single.child("from").getValue().toString(),single.child("to").getValue().toString(),single.child("date").getValue().toString(),single.child("time").getValue().toString());
+                    String from = single.child("from").getValue().toString(),
+                            to = single.child("to").getValue().toString(),
+                            date = single.child("date").getValue().toString(),
+                            time = single.child("time").getValue().toString();
 
+                    if (!CompareTime.isValid(date,time)) {
+                        databaseReference.child(single.getKey()).setValue(null);
+                        continue;
+                    }
+
+                    Cabpools cabpool = new Cabpools(from,to,date,time);
                     cabpools.add(cabpool);
                     mDataKey.add(single.getKey());
-                    if(!autoComplete.contains(single.child("from").getValue().toString()))
-                        autoComplete.add(single.child("from").getValue().toString());
-                    if(!autoComplete.contains(single.child("to").getValue().toString()))
-                        autoComplete.add(single.child("to").getValue().toString());
-                    if(!autoComplete.contains(single.child("date").getValue().toString().substring(0,2)))
-                      autoComplete.add(single.child("date").getValue().toString().substring(0,2));
+                    if(!autoComplete.contains(from))
+                        autoComplete.add(from);
+                    if(!autoComplete.contains(to))
+                        autoComplete.add(to);
+                    if(!autoComplete.contains(date.substring(0,2)))
+                      autoComplete.add(date.substring(0,2));
                 }
                 adapter.notifyDataSetChanged();
                 progress.dismiss();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
     }
 

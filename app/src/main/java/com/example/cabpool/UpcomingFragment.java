@@ -86,25 +86,30 @@ public class UpcomingFragment extends Fragment {
                 cabpools.clear();
                 mDataKey.clear();
                 for (DataSnapshot single : dataSnapshot.getChildren()) {
-                    final String cabpoolId = single.getValue().toString();
+                    final String cabpoolId = single.getKey();
 
-                    cabpoolReference = FirebaseDatabase.getInstance().getReference().child("Cabpools").child(cabpoolId);
+                    cabpoolReference = FirebaseDatabase.getInstance().getReference().child("Cabpools");
 
                     cabpoolReference.addValueEventListener(new ValueEventListener() {
+
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                            String from=dataSnapshot.child("from").getValue().toString();
-                            String to=dataSnapshot.child("to").getValue().toString();
-                            String date=dataSnapshot.child("date").getValue().toString();
-                            String time=dataSnapshot.child("time").getValue().toString();
+                            if(!dataSnapshot.hasChild(cabpoolId))
+                                databaseReference.child(cabpoolId).setValue(null);
+                            else {
+                                String from = dataSnapshot.child(cabpoolId).child("from").getValue().toString();
+                                String to = dataSnapshot.child(cabpoolId).child("to").getValue().toString();
+                                String date = dataSnapshot.child(cabpoolId).child("date").getValue().toString();
+                                String time = dataSnapshot.child(cabpoolId).child("time").getValue().toString();
 
-                            Cabpools cabpool = new Cabpools(from,to,date,time);
-                            cabpools.add(cabpool);
-                            mDataKey.add(cabpoolId);
 
-                            adapter.notifyDataSetChanged();
+                                Cabpools cabpool = new Cabpools(from, to, date, time);
+                                cabpools.add(cabpool);
+                                mDataKey.add(cabpoolId);
 
+                                adapter.notifyDataSetChanged();
+                            }
                         }
 
 

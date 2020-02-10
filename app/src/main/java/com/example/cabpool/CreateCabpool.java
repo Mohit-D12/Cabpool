@@ -33,9 +33,11 @@ public class CreateCabpool extends AppCompatActivity {
     //variable initialization
     EditText from_EditText, to_EditText;
     Button date_Button,time_Button,add_Button;
+
     DatePickerDialog.OnDateSetListener onDateSetListener;
     DatePickerDialog datePickerDialog;
     TimePickerDialog timePickerDialog;
+
     int day, month, year, hour, minute;
     String date,time,from, to,uid, cabpoolId;
 
@@ -57,10 +59,7 @@ public class CreateCabpool extends AppCompatActivity {
         time_Button = findViewById(R.id.TimeButton_Create);
         add_Button = findViewById(R.id.AddButton_Create);
 
-
-
         cabpools = new ArrayList<>();
-
 
         //code to input date
         date_Button.setOnClickListener(new View.OnClickListener() {
