@@ -162,10 +162,10 @@ public class CreateCabpool extends AppCompatActivity {
                   sharedPreferences = getSharedPreferences("Users",MODE_PRIVATE);
                   uid = sharedPreferences.getString("userId","defaultUser");
 
-                  databaseReference.child(cabpoolId).child("Users").push().setValue(uid);
+                  databaseReference.child(cabpoolId).child("Users").child(uid).setValue(uid);
                   usersReference = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
 
-                  usersReference.child("Cabpools").push().setValue(cabpoolId);
+                  usersReference.child("Cabpools").child(cabpoolId).setValue(cabpoolId);
 
 
                     Intent toMainAppActivity = new Intent(getApplicationContext(), mainApp_activity.class);
