@@ -108,8 +108,11 @@ public class UpcomingFragment extends Fragment {
                                 cabpools.add(cabpool);
                                 mDataKey.add(cabpoolId);
 
-                                adapter.notifyDataSetChanged();
                             }
+                            cabpools = SortCabpool.sortCabpool(cabpools,mDataKey);
+                            mDataKey = SortCabpool.sortKey(cabpools,mDataKey);
+                            adapter.notifyDataSetChanged();
+                            progress.dismiss();
                         }
 
 
@@ -120,7 +123,7 @@ public class UpcomingFragment extends Fragment {
                     });
 
                 }
-                progress.dismiss();
+
             }
 
             @Override
