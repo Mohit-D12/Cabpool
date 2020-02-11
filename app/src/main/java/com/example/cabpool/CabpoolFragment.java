@@ -27,9 +27,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+
+import static com.example.cabpool.CompareTime.dateFormat;
 
 public class CabpoolFragment extends Fragment {
 
@@ -45,10 +49,12 @@ public class CabpoolFragment extends Fragment {
     List<Cabpools> tempCabpools = new ArrayList<>();
     List<String> mTempDataKey = new ArrayList<>();
     List<String> autoComplete= new ArrayList<>();
+    String currentTime,currentDate;
 
     ProgressDialog progress;
     SwipeRefreshLayout swipeRefreshLayout;
     CabpoolAdapter adapter, tempAdapter;
+    static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY-HH-mm");
 
     @Nullable
     @Override
@@ -61,6 +67,9 @@ public class CabpoolFragment extends Fragment {
         swipeRefreshLayout = cabpoolView.findViewById(R.id.refresh_cabpools);
 
         searchBar = cabpoolView.findViewById(R.id.autoCompleteTextView_searchBar);
+
+        currentTime = dateFormat.format(Calendar.getInstance().getTime()).substring(0,10);
+        currentDate = dateFormat.format(Calendar.getInstance().getTime()).substring(11);
 
         addCabpoolFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,7 +186,7 @@ public class CabpoolFragment extends Fragment {
                             date = single.child("date").getValue().toString(),
                             time = single.child("time").getValue().toString();
 
-                    if (!CompareTime.isValid(date,time) || !single.hasChild("Users")) {
+                    if (!CompareTime.isValid(date,time,currentDate,currentTime) || !single.hasChild("Users")) {
                         databaseReference.child(single.getKey()).setValue(null);
                         continue;
                     }
@@ -192,6 +201,8 @@ public class CabpoolFragment extends Fragment {
                     if(!autoComplete.contains(date.substring(0,2)))
                       autoComplete.add(date.substring(0,2));
                 }
+                cabpools = SortCabpool.sortCabpool(cabpools,mDataKey);
+                mDataKey = SortCabpool.sortKey(cabpools,mDataKey);
                 adapter.notifyDataSetChanged();
                 progress.dismiss();
             }

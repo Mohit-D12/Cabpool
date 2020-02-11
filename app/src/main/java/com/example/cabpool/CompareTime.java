@@ -21,16 +21,18 @@ public class CompareTime {
             this.hour = Integer.toString((Integer.parseInt(this.hour) + 12));
     }
 
-    static boolean isValid(String cabpoolDate,String cabpoolTime)
+    static boolean isValid(String cabpoolDate,String cabpoolTime,String cabpoolDate2,String cabpoolTime2)
     {
         cabpoolDate = cabpoolDate.replaceAll("/","-");
         cabpoolTime = cabpoolTime.replace(':','-');
+        cabpoolDate2 = cabpoolDate2.replaceAll("/","-");
+        cabpoolTime2 = cabpoolTime2.replace(':','-');
 
         CompareTime currentTime = new CompareTime();
         CompareTime cabpool = new CompareTime();
-        currentTime.init(dateFormat.format(Calendar.getInstance().getTime()));
+        currentTime.init(cabpoolDate2+"-"+cabpoolTime2);
         cabpool.init(cabpoolDate+"-"+cabpoolTime);
-
+        //dateFormat.format(Calendar.getInstance().getTime()
         if (cabpool.year.compareTo(currentTime.year)>0)
             return true;
         else if(cabpool.year.compareTo(currentTime.year)<0)
