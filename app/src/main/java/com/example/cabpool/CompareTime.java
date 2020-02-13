@@ -17,6 +17,8 @@ public class CompareTime {
         this.hour=stringTokenizer.nextToken();
         this.minutes=stringTokenizer.nextToken().substring(0,2);
 
+        System.out.println("Timestart "+this.date+"/"+this.month+"/"+this.year+"/"+this.hour+"/"+this.minutes);
+
         if(time.contains("PM"))
             this.hour = Integer.toString((Integer.parseInt(this.hour) + 12));
     }
@@ -32,6 +34,7 @@ public class CompareTime {
         CompareTime cabpool = new CompareTime();
         currentTime.init(cabpoolDate2+"-"+cabpoolTime2);
         cabpool.init(cabpoolDate+"-"+cabpoolTime);
+
         //dateFormat.format(Calendar.getInstance().getTime()
         if (cabpool.year.compareTo(currentTime.year)>0)
             return true;

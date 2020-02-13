@@ -68,8 +68,10 @@ public class CabpoolFragment extends Fragment {
 
         searchBar = cabpoolView.findViewById(R.id.autoCompleteTextView_searchBar);
 
-        currentTime = dateFormat.format(Calendar.getInstance().getTime()).substring(0,10);
-        currentDate = dateFormat.format(Calendar.getInstance().getTime()).substring(11);
+        currentDate = dateFormat.format(Calendar.getInstance().getTime()).substring(0,10);
+        currentTime = dateFormat.format(Calendar.getInstance().getTime()).substring(11);
+        System.out.println("Current Time "+currentTime);
+        System.out.println("Current Time "+currentDate);
 
         addCabpoolFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override

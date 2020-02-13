@@ -101,9 +101,11 @@ public class CabpoolInfo extends AppCompatActivity {
         cabpoolReference.child("Users").child(uid).setValue(null);
         usersReference.child(uid).child("Cabpools").child(cabpoolId).setValue(null);
         Toast.makeText(getApplicationContext(), "Left Cabpool successfully", Toast.LENGTH_SHORT).show();
-        joinButton_cabpoolInfo_java.setText("JOIN");
+        if (cabpoolReference.child("Users") != null)
+            joinButton_cabpoolInfo_java.setText("JOIN");
         startActivity(new Intent(getApplicationContext(), mainApp_activity.class));
-        loadData();
+        //loadData();
+
     }
 
     private void loadData() {
@@ -113,7 +115,7 @@ public class CabpoolInfo extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 users.clear();;
                 mDataKey.clear();
-
+                if(!dataSnapshot.hasChildren()) return;
                 from_cabpoolInfo_java.setText(dataSnapshot.child("from").getValue().toString());
                 to_cabpoolInfo_java.setText(dataSnapshot.child("to").getValue().toString());
                 date_cabpoolInfo_java.setText(dataSnapshot.child("date").getValue().toString());
