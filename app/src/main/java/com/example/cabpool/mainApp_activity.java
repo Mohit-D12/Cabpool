@@ -148,6 +148,7 @@ public class mainApp_activity extends AppCompatActivity implements NavigationVie
         {
             FirebaseAuth mAuth= FirebaseAuth.getInstance();
             mAuth.signOut();
+            if(mGoogleSignInClient!=null)
             revokeAccess();
             sharedPreferences = getSharedPreferences("Users",MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();

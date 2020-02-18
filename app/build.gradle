@@ -28,29 +28,35 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation 'com.google.firebase:firebase-analytics:17.2.1'          //connecting to firebase
+    implementation 'com.google.firebase:firebase-analytics:17.2.2'          //connecting to firebase
 
-    implementation 'com.google.firebase:firebase-analytics:17.2.1'
+    implementation 'com.google.firebase:firebase-analytics:17.2.2'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
-    implementation 'com.google.firebase:firebase-database:19.2.0'
+    implementation 'com.google.firebase:firebase-database:19.2.1'
     implementation 'com.google.firebase:firebase-auth:19.2.0'//for recycler view
 
     implementation 'com.google.android.material:material:1.0.0'   //for bottom navigation bar
-    implementation "androidx.fragment:fragment:1.1.0"             //for fragment
+    implementation "androidx.fragment:fragment:1.2.1"             //for fragment
     implementation "androidx.drawerlayout:drawerlayout:1.0.0"     //for Drawer layout
 
     //Firebase SDK for Google Analytics
-    implementation 'com.google.firebase:firebase-analytics:17.2.1'
+    implementation 'com.google.firebase:firebase-analytics:17.2.2'
 
     //SDKs for any other Firebase products you want to use in your app
     implementation 'com.google.firebase:firebase-auth:19.2.0'
-    implementation 'com.google.firebase:firebase-firestore:21.3.1'
+    implementation 'com.google.firebase:firebase-firestore:21.4.0'
 
-    implementation 'com.google.firebase:firebase-database:19.2.0' //for firebase database
+    implementation 'com.google.firebase:firebase-database:19.2.1' //for firebase database
 
     implementation "androidx.recyclerview:recyclerview:1.1.0"    //for recycler view
 
     implementation 'com.firebaseui:firebase-ui-database:3.2.2'   //firebase recycler view
+
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+
+    implementation 'com.facebook.fresco:fresco:2.1.0'
+
 
 
 }

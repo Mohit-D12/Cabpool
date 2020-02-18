@@ -14,19 +14,23 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
+        android:weightSum="10"
         android:layout_height="match_parent"
         android:layout_marginVertical="12dp"
         >
 
         <LinearLayout
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
+            android:layout_weight="8"
             android:gravity="center_vertical"
+            android:weightSum="2"
             android:layout_marginLeft="5dp"
             >
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textSize="17sp"
                 android:text="Name"
@@ -35,10 +39,12 @@
                 android:id="@+id/name_field_driversRecyclerView"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:text="Vehicle"
+                android:layout_gravity="center"
                 android:layout_marginHorizontal="15dp"
                 android:id="@+id/vehicle_field_driversRecyclerView"
                 />
@@ -48,11 +54,12 @@
             android:id="@+id/call_driversRecyclerView"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
-            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="15dp"
             android:backgroundTint="@color/cardview_shadow_end_color"
             android:src="@drawable/call"
             android:tint="@color/colorAccent"
-            android:layout_marginLeft="12dp"
             />
 
     </LinearLayout>

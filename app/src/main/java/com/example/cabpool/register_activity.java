@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,8 +19,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class register_activity extends AppCompatActivity {
 
@@ -66,10 +71,21 @@ public class register_activity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
 
-                                    String uid= mAuth.getCurrentUser().getUid();
-                                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
+                                    final String uid= mAuth.getCurrentUser().getUid();
+                                    final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
                                     databaseReference.child(uid).child("name").setValue(name);
-                                    databaseReference.child(uid).child("phone").setValue(0);
+                                    databaseReference.child(uid).child("phone").addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            if(!dataSnapshot.exists())
+                                                databaseReference.child(uid).child("phone").setValue("0");
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
                                     sharedPreferences = getSharedPreferences("Users",MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putString("userId",uid);
@@ -79,6 +95,14 @@ public class register_activity extends AppCompatActivity {
 
                                     UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
                                     mAuth.getCurrentUser().updateProfile(profileChangeRequest);
+
+                                    Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
+                                            "://" + getApplicationContext().getResources().getResourcePackageName(R.drawable.login_icon)
+                                            + '/' + getApplicationContext().getResources().getResourceTypeName(R.drawable.login_icon)
+                                            + '/' + getApplicationContext().getResources().getResourceEntryName(R.drawable.login_icon) );
+                                    UserProfileChangeRequest userProfileChangeRequest= new UserProfileChangeRequest.Builder().setPhotoUri(imageUri).build();
+                                    mAuth.getCurrentUser().updateProfile(userProfileChangeRequest);
+
 
                                     mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override

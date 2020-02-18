@@ -72,6 +72,7 @@ public class UpcomingFragment extends Fragment {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+        progress.dismiss();
     }
     private void loadData() {
         sharedPreferences = getActivity().getSharedPreferences("Users",MODE_PRIVATE);;

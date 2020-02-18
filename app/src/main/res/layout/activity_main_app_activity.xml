@@ -37,6 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:menu="@menu/navigation_view"
+
         android:id="@+id/navigationView"
         app:headerLayout="@layout/header_navigation_drawer"
         android:layout_gravity="start" />
