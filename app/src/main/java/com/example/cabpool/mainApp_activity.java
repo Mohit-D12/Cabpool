@@ -154,6 +154,7 @@ public class mainApp_activity extends AppCompatActivity implements NavigationVie
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("userId",null);
             editor.putString("userName",null);
+            editor.putString("userPhoneNumber",null);
             editor.commit();
             startActivity(new Intent(mainApp_activity.this,MainActivity.class));
         }

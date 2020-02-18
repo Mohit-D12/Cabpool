@@ -2,6 +2,7 @@ package com.example.cabpool;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +35,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.example.cabpool.CompareTime.dateFormat;
 
 public class CabpoolFragment extends Fragment {
@@ -54,6 +57,7 @@ public class CabpoolFragment extends Fragment {
     ProgressDialog progress;
     SwipeRefreshLayout swipeRefreshLayout;
     CabpoolAdapter adapter, tempAdapter;
+    SharedPreferences sharedPreferences;
     static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY-HH-mm");
 
     @Nullable
@@ -76,7 +80,12 @@ public class CabpoolFragment extends Fragment {
         addCabpoolFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(),CreateCabpool.class));
+                sharedPreferences = getActivity().getSharedPreferences("Users",MODE_PRIVATE);;
+                String phoneNumber = sharedPreferences.getString("userPhoneNumber","0");
+                if(!phoneNumber.equals("0"))
+                    startActivity(new Intent(getActivity(),CreateCabpool.class));
+                else
+                    Toast.makeText(getContext(),"Please verify your phone number first",Toast.LENGTH_SHORT).show();
             }
         });
 

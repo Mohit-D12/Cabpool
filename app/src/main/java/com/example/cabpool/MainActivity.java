@@ -26,15 +26,18 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
     Button googleSignInButton_loginScreen_java, loginButton_loginScreen_java;
     EditText username_loginScreen_java, password_loginScreen_java;
     TextView signUp_loginScreen_java;
-    String tag="abc";
+    String tag="abc", phone;
     int RC_SignIn=5;
     FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
@@ -137,16 +140,34 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(tag, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            final FirebaseUser user = mAuth.getCurrentUser();
                             String uid= mAuth.getCurrentUser().getUid();
-                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
-                            databaseReference.child(uid).child("name").setValue(user.getDisplayName());
-                            databaseReference.child(uid).child("phone").setValue(0);
+
                             sharedPreferences = getSharedPreferences("Users",MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            final SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                            final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+                            databaseReference.child("name").setValue(user.getDisplayName());
+
+                            databaseReference.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if(!dataSnapshot.hasChild("phone"))
+                                        databaseReference.child("phone").setValue(0);
+                                    phone = dataSnapshot.child("phone").getValue().toString();
+                                    editor.putString("userPhoneNumber",phone);
+                                    editor.commit();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+
                             editor.putString("userId",uid);
                             editor.putString("userName",user.getDisplayName());
-                            System.out.println("userName"+user.getDisplayName());
                             editor.commit();
 
                             updateUI(user);

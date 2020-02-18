@@ -19,7 +19,7 @@ public class CompareTime {
 
         System.out.println("Timestart "+this.date+"/"+this.month+"/"+this.year+"/"+this.hour+"/"+this.minutes);
 
-        if(time.contains("PM"))
+        if(time.contains("PM") && !this.minutes.equals("12"))
             this.hour = Integer.toString((Integer.parseInt(this.hour) + 12));
     }
 
