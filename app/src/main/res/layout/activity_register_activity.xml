@@ -60,6 +60,7 @@
         android:layout_marginTop="70dp"
         android:id="@+id/registerButton_registerActivity_xml"
         android:layout_marginRight="20dp"
+        android:backgroundTint="@color/floatingButton"
         />
 
 </RelativeLayout>

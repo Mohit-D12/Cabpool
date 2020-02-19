@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +33,7 @@ public class UpcomingFragment extends Fragment {
 
     private View upcomingView;
     private RecyclerView recyclerView;
+    TextView defaultDisplayView;
     DatabaseReference databaseReference, cabpoolReference;
     SharedPreferences sharedPreferences;
 
@@ -49,6 +51,8 @@ public class UpcomingFragment extends Fragment {
         upcomingView = inflater.inflate(R.layout.upcoming_fragment, container, false);
         recyclerView = upcomingView.findViewById(R.id.recyclerView_upcoming);
         swipeRefreshLayout = upcomingView.findViewById(R.id.refresh_upcoming);
+        defaultDisplayView = upcomingView.findViewById(R.id.defaultTextView_upcoming);
+        defaultDisplayView.setVisibility(View.VISIBLE);
         return upcomingView;
     }
     @Override
@@ -72,7 +76,6 @@ public class UpcomingFragment extends Fragment {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-        progress.dismiss();
     }
     private void loadData() {
         sharedPreferences = getActivity().getSharedPreferences("Users",MODE_PRIVATE);;
@@ -88,9 +91,9 @@ public class UpcomingFragment extends Fragment {
                 mDataKey.clear();
                 for (DataSnapshot single : dataSnapshot.getChildren()) {
                     final String cabpoolId = single.getKey();
+                    defaultDisplayView.setVisibility(View.GONE);
 
                     cabpoolReference = FirebaseDatabase.getInstance().getReference().child("Cabpools");
-
                     cabpoolReference.addValueEventListener(new ValueEventListener() {
 
                         @Override
@@ -132,6 +135,8 @@ public class UpcomingFragment extends Fragment {
 
             }
         });
+        if(cabpools.isEmpty())
+            progress.dismiss();
     }
 
     private void init() {

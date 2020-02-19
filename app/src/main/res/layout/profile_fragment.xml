@@ -16,8 +16,8 @@
         android:textSize="28sp"/>
 
     <com.facebook.drawee.view.SimpleDraweeView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:id="@+id/profilePicture_profileFragment_xml"
         android:layout_marginTop="120dp"
         android:layout_centerHorizontal="true"
@@ -79,6 +79,7 @@
             android:layout_alignParentRight="true"
             android:text="save"
             android:layout_marginLeft="4dp"
+            android:backgroundTint="@color/floatingButton"
             />
         <Button
             android:layout_width="wrap_content"
@@ -86,13 +87,15 @@
             android:text="submit"
             android:visibility="invisible"
             android:layout_toLeftOf="@id/save_profileFragment_xml"
-            android:id="@+id/submit_profileFragment_xml"/>
+            android:id="@+id/submit_profileFragment_xml"
+            android:backgroundTint="@color/floatingButton"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="verify"
             android:layout_toLeftOf="@id/save_profileFragment_xml"
             android:id="@+id/verify_profileFragment_xml"
+            android:backgroundTint="@color/floatingButton"
             />
     </RelativeLayout>
 

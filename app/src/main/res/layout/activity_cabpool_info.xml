@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:text="from"
             android:id="@+id/from_cabpoolInfo_xml"
             />
@@ -28,13 +28,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginVertical="5dp"
             android:src="@drawable/swap"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:text="to"
             android:id="@+id/to_cabpoolInfo_xml"
             />
@@ -51,14 +52,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:text="date"
                 android:id="@+id/date_cabpoolInfo_xml"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:layout_weight="1"
                 android:text="time"
                 android:gravity="right"
@@ -79,7 +80,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_margin="20dp"
+                android:layout_margin="15dp"
+                android:backgroundTint="@android:color/transparent"
             >
 
             <TextView
@@ -89,12 +91,14 @@
                 android:textSize="25sp"
                 android:gravity="center"
                 android:layout_marginBottom="20dp"
+                android:backgroundTint="@android:color/transparent"
                 />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_users_cabpoolInfo"
                 android:layout_width="match_parent"
-                android:layout_height="102dp" />
+                android:layout_height="102dp"
+                android:backgroundTint="@android:color/transparent"/>
 
             </LinearLayout>
 

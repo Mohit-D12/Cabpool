@@ -55,12 +55,14 @@
             android:layout_height="wrap_content"
             android:text="Select Date"
             android:id="@+id/DateButton_Create"
+            android:backgroundTint="@color/buttonPanel"
             />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Select Time"
             android:id="@+id/TimeButton_Create"
+            android:backgroundTint="@color/buttonPanel"
             />
     </LinearLayout>
 
@@ -76,6 +78,7 @@
         android:id="@+id/AddButton_Create"
         android:layout_marginRight="35dp"
         android:layout_gravity="right"
+        android:backgroundTint="@color/floatingButton"
         />
 
 </LinearLayout>

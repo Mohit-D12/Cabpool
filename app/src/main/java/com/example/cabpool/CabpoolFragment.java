@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,6 +44,7 @@ public class CabpoolFragment extends Fragment {
     private View cabpoolView;
     private FloatingActionButton addCabpoolFloatingButton;
     private RecyclerView recyclerView;
+    TextView defaultDisplayView;
     DatabaseReference databaseReference;
 
     AutoCompleteTextView searchBar;
@@ -69,7 +71,8 @@ public class CabpoolFragment extends Fragment {
         addCabpoolFloatingButton = cabpoolView.findViewById(R.id.AddButton_Create);
         recyclerView = cabpoolView.findViewById(R.id.recyclerView_cabpool);
         swipeRefreshLayout = cabpoolView.findViewById(R.id.refresh_cabpools);
-
+        defaultDisplayView = cabpoolView.findViewById(R.id.defaultTextView_cabpool);
+        defaultDisplayView.setVisibility(View.VISIBLE);
         searchBar = cabpoolView.findViewById(R.id.autoCompleteTextView_searchBar);
 
         currentDate = dateFormat.format(Calendar.getInstance().getTime()).substring(0,10);
@@ -192,6 +195,7 @@ public class CabpoolFragment extends Fragment {
                 mDataKey.clear();
                 autoComplete.clear();
                 for(DataSnapshot single:dataSnapshot.getChildren()){
+                    defaultDisplayView.setVisibility(View.GONE);
                     String from = single.child("from").getValue().toString(),
                             to = single.child("to").getValue().toString(),
                             date = single.child("date").getValue().toString(),
